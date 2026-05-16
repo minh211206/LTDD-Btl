@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="#FFF5F5F5">
 
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,11 +31,26 @@
             android:textStyle="bold"
             android:textColor="#1A1A1A"
             android:gravity="center" />
-        <View android:layout_width="38dp" android:layout_height="38dp" />
+        <View android:layout_width="48dp" android:layout_height="48dp" />
     </LinearLayout>
+
+    <!-- Tab bar -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:scrollbars="none"
+        android:elevation="2dp">
+        <LinearLayout
+            android:id="@+id/tab_container"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
 
+    <!-- Empty state -->
     <LinearLayout
         android:id="@+id/layout_empty"
         android:layout_width="match_parent"
@@ -43,14 +59,21 @@
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/emoji_box" android:textSize="48sp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋"
+            android:textSize="48sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Chưa có đơn hàng nào"
-            android:textSize="15sp" android:textColor="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#9E9E9E" />
     </LinearLayout>
 
+    <!-- Order list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_orders"
         android:layout_width="match_parent"
@@ -58,4 +81,5 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:padding="12dp" />
+
 </LinearLayout>

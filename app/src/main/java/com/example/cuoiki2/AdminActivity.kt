@@ -240,7 +240,7 @@ class AdminOrdersFragment : Fragment() {
 
     private fun showOrderDetail(order: Order) {
         val ctx = requireContext()
-        val statuses = arrayOf("Chờ xác nhận","Đã xác nhận","Đang giao","Đã nhận hàng","Hoàn thành","Đã hủy")
+        val statuses = arrayOf("Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao", "Đã hủy")
         var currentStatus = order.status
         val items = order.items.joinToString("\n") { "• ${it.product.name} x${it.quantity} — ${formatPrice(parsePrice(it.product.price)*it.quantity)}" }
 

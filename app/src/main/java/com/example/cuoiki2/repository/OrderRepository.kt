@@ -78,7 +78,7 @@ class OrderRepository(private val productRepo: ProductRepository) {
     suspend fun updateStatus(order: Order, status: String) {
         if (order.firestoreId.isEmpty()) return
         db.collection("orders").document(order.firestoreId).update("status", status).await()
-        if (status == "Đã hủy" || status == "Trả hàng") {
+        if (status == "Đã hủy") {
             order.items.forEach { ci ->
                 if (ci.product.firestoreId.isNotEmpty())
                     productRepo.increaseStock(ci.product.firestoreId, ci.quantity)

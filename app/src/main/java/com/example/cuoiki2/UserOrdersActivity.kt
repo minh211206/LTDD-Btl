@@ -3,10 +3,13 @@ import com.example.cuoiki2.model.*
 import com.example.cuoiki2.repository.AppRepository
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +25,11 @@ import kotlinx.coroutines.launch
 class UserOrdersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserOrdersBinding
+    private lateinit var adapter: OrderAdapter
+    private var allOrders: List<Order> = emptyList()
+
+    private val tabs = listOf("Tất cả", "Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao", "Đã hủy")
+    private var selectedTab = "Tất cả"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +41,66 @@ class UserOrdersActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        val adapter = OrderAdapter { order -> showOrderDetail(order) }
+        adapter = OrderAdapter { order -> showOrderDetail(order) }
         binding.rvOrders.layoutManager = LinearLayoutManager(this)
         binding.rvOrders.adapter = adapter
 
+        setupTabs()
+
         AppRepository.orders.observe(this) { orders ->
-            val myOrders = orders.filter { it.username == username }
+            allOrders = orders.filter { it.username == username }
                 .sortedByDescending { it.id }
-            adapter.submitList(myOrders)
-            binding.layoutEmpty.visibility = if (myOrders.isEmpty()) View.VISIBLE else View.GONE
-            binding.rvOrders.visibility    = if (myOrders.isEmpty()) View.GONE   else View.VISIBLE
+            applyFilter()
         }
+    }
+
+    private fun setupTabs() {
+        binding.tabContainer.removeAllViews()
+        tabs.forEach { tab ->
+            val tv = TextView(this).apply {
+                text = tab
+                textSize = 13f
+                setPadding(dpToPx(16), 0, dpToPx(16), 0)
+                gravity = android.view.Gravity.CENTER
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+                setOnClickListener { selectTab(tab) }
+            }
+            binding.tabContainer.addView(tv)
+            styleTab(tv, tab == selectedTab)
+        }
+    }
+
+    private fun selectTab(tab: String) {
+        selectedTab = tab
+        for (i in 0 until binding.tabContainer.childCount) {
+            val tv = binding.tabContainer.getChildAt(i) as TextView
+            styleTab(tv, tv.text == tab)
+        }
+        applyFilter()
+    }
+
+    private fun styleTab(tv: TextView, selected: Boolean) {
+        if (selected) {
+            tv.setTextColor(Color.parseColor("#3E1C00"))
+            tv.setTypeface(null, Typeface.BOLD)
+            tv.setBackgroundResource(R.drawable.bg_tab_selected_bottom)
+        } else {
+            tv.setTextColor(Color.parseColor("#9E9E9E"))
+            tv.setTypeface(null, Typeface.NORMAL)
+            tv.setBackgroundColor(Color.TRANSPARENT)
+        }
+    }
+
+    private fun applyFilter() {
+        val filtered = if (selectedTab == "Tất cả") allOrders
+        else allOrders.filter { it.status == selectedTab }
+
+        adapter.submitList(filtered)
+        binding.layoutEmpty.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+        binding.rvOrders.visibility    = if (filtered.isEmpty()) View.GONE   else View.VISIBLE
     }
 
     private fun showOrderDetail(order: Order) {
@@ -68,6 +125,8 @@ class UserOrdersActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
+    private fun dpToPx(dp: Int) = (dp * resources.displayMetrics.density).toInt()
 }
 
 class OrderAdapter(
