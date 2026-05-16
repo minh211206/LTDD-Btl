@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDF6EC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <!-- Hero banner -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#FF4E2C0E"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/emoji_fashion"
+                android:textSize="11sp"
+                android:textColor="#99FFFFFF"
+                android:letterSpacing="0.3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Hương vị\nTrong từng\nNgụm cà phê"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:lineSpacingExtra="6dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explore_chip"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:text="Khám phá menu 2026"
+                android:textSize="12sp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- About shop -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VỀ SHOP CHÚNG TÔI"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#4E2C0E"
+                android:letterSpacing="0.05" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Chúng tôi mang đến những ly cà phê được chọn lọc kỹ càng — từ cà phê truyền thống đậm đà đến những thức uống hiện đại sáng tạo, pha chế từ nguyên liệu tươi ngon nhất."
+                android:textSize="14sp"
+                android:textColor="#555555"
+                android:lineSpacingExtra="6dp" />
+
+            <!-- Stats -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="50+" android:textSize="18sp" android:textStyle="bold" android:textColor="#4E2C0E" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Món nước" android:textSize="11sp" android:textColor="#9E9E9E" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="1K+" android:textSize="18sp" android:textStyle="bold" android:textColor="#4E2C0E" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Khách hàng" android:textSize="11sp" android:textColor="#9E9E9E" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/emoji_star" android:textSize="18sp" android:textStyle="bold" android:textColor="#4E2C0E" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Đánh giá" android:textSize="11sp" android:textColor="#9E9E9E" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="5 năm" android:textSize="18sp" android:textStyle="bold" android:textColor="#4E2C0E" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Kinh nghiệm" android:textSize="11sp" android:textColor="#9E9E9E" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Tips -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#FF4E2C0E">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_bulb"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="- Bảo quản cà phê trong hộp kín, tránh ánh sáng\n- Nước pha cà phê lý tưởng 90-96 độ C\n- Xay cà phê trước khi pha để giữ hương\n- Cà phê espresso nên uống trong 30 giây sau khi pha"
+                    android:textSize="13sp"
+                    android:textColor="#D9FFFFFF"
+                    android:lineSpacingExtra="6dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Menu highlights -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENU NỔI BẬT"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#4E2C0E" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="#FFF3E0">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="14dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Cà phê sữa đá" android:textStyle="bold"
+                            android:textSize="13sp" android:textColor="#4E2C0E" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Đậm đà, béo ngây, giải khát hiệu quả"
+                            android:textSize="11sp" android:textColor="#666666" android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="#E8F5E9">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="14dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Matcha Latte" android:textStyle="bold"
+                            android:textSize="13sp" android:textColor="#2E7D32" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Trà xanh Nhật Bản, sữa tươi, thơm mát"
+                            android:textSize="11sp" android:textColor="#666666" android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

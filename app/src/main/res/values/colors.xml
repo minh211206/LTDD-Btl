@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4E2C0E</color>
+    <color name="colorPrimaryDark">#2C1A08</color>
+    <color name="colorAccent">#D4A017</color>
+    <color name="colorSurface">#FDF6EC</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="tint_gray">#9E9E9E</color>
+    <color name="tint_light_gray">#BBBBBB</color>
+    <color name="tint_medium_gray">#888888</color>
+    <color name="tint_chevron">#BDBDBD</color>
+    <color name="tint_red">#E53935</color>
+    <color name="darkBrown">#201b18</color>
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#FFFFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- Image -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp">
+
+            <ImageView
+                android:id="@+id/iv_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_product_img_light"
+                android:contentDescription="Anh san pham" />
+
+            <!-- Out of stock -->
+            <TextView
+                android:id="@+id/tv_out_of_stock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#99000000"
+                android:gravity="center"
+                android:text="Het hang"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <!-- Favorite -->
+            <ImageButton
+                android:id="@+id/btn_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_favorite_border"
+                android:contentDescription="Yeu thich" />
+        </FrameLayout>
+
+        <!-- Name -->
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#2C1A08"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Category as subtitle -->
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="11sp"
+            android:textColor="#9E9E9E"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Price + Add -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#4E2C0E" />
+
+            <ImageButton
+                android:id="@+id/btn_add_quick"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_add_btn"
+                android:src="@drawable/ic_add"
+                android:padding="7dp"
+                android:contentDescription="Them vao gio" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

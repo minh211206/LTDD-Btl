@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin tài khoản"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Not logged in -->
+    <LinearLayout
+        android:id="@+id/layout_not_logged_in"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_person"
+            app:tint="@color/tint_light_gray"
+            android:contentDescription="Avatar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Bạn chưa đăng nhập? Vui lòng"
+            android:textSize="15sp"
+            android:textColor="#1A1A1A" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="Đăng nhập"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            app:strokeColor="#1A1A1A"
+            app:cornerRadius="30dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="hoặc"
+            android:textSize="13sp"
+            android:textColor="#9E9E9E" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Đăng ký"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            app:strokeColor="#1A1A1A"
+            app:cornerRadius="30dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+    </LinearLayout>
+
+    <!-- Logged in -->
+    <LinearLayout
+        android:id="@+id/layout_logged_in"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="#FFF5F3EE">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/ic_person"
+                app:tint="@color/tint_medium_gray"
+                android:background="@drawable/bg_circle_gray"
+                android:padding="18dp"
+                android:contentDescription="Avatar" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A1A" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#9E9E9E" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp">
+
+                <!-- Menu Info -->
+                <LinearLayout
+                    android:id="@+id/menu_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/icon_info"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_person"
+                        android:contentDescription="icon" />
+                    <TextView
+                        android:id="@+id/title_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Thông tin tài khoản"
+                        android:textSize="15sp"
+                        android:textColor="#1A1A1A" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/tint_chevron"
+                        android:contentDescription="Mở" />
+                </LinearLayout>
+
+                <!-- Menu Orders -->
+                <LinearLayout
+                    android:id="@+id/menu_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/icon_orders"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_receipt"
+                        android:contentDescription="icon" />
+                    <TextView
+                        android:id="@+id/title_orders"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Đơn hàng của tôi"
+                        android:textSize="15sp"
+                        android:textColor="#1A1A1A" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/tint_chevron"
+                        android:contentDescription="Mở" />
+                </LinearLayout>
+
+                <!-- Menu Password -->
+                <LinearLayout
+                    android:id="@+id/menu_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/icon_password"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_lock"
+                        android:contentDescription="icon" />
+                    <TextView
+                        android:id="@+id/title_password"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Đổi mật khẩu"
+                        android:textSize="15sp"
+                        android:textColor="#1A1A1A" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/tint_chevron"
+                        android:contentDescription="Mở" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_logout"
+                        app:tint="@color/tint_red"
+                        android:contentDescription="Đăng xuất" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Đăng xuất"
+                        android:textSize="15sp"
+                        android:textColor="#E53935"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</LinearLayout>
+

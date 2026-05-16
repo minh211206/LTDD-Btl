@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CuoiKi2</string>
+    <string name="emoji_cart">&#x2615;</string>
+    <string name="emoji_box">&#x1F4E6;</string>
+    <string name="emoji_heart">&#x2661;</string>
+    <string name="emoji_bulb">&#x1F4A1; TIPS PHA C&#192; PH&#202;</string>
+    <string name="emoji_fashion">&#x2615; COFFEE WORLD &#x2615;</string>
+    <string name="emoji_star">4.9&#x2605;</string>
+    <string name="minus_sign">&#8722;</string>
+</resources>
