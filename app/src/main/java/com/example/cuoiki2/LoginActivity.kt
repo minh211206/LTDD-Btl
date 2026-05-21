@@ -21,7 +21,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val app = application as ShopApplication
-        viewModel = ViewModelProvider(this, AuthViewModelFactory(app.userRepo))[AuthViewModel::class.java]
+        viewModel = app.authViewModel
+
+        // Reset state cũ khi mở lại màn hình
+        viewModel.resetLoginState()
 
         binding.btnBack.setOnClickListener { finish() }
         binding.tvGoRegister.setOnClickListener {
@@ -42,8 +45,6 @@ class LoginActivity : AppCompatActivity() {
                     binding.tvError.visibility = View.GONE
                 }
                 is LoginState.Success -> {
-                    // Sync vào app-level authViewModel
-                    app.authViewModel.login(state.user)
                     if (state.user.role == "admin") {
                         startActivity(Intent(this, AdminActivity::class.java))
                     }

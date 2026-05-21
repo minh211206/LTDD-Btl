@@ -20,8 +20,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val app = application as ShopApplication
-        val viewModel = ViewModelProvider(this, AuthViewModelFactory(app.userRepo))[
-            com.example.cuoiki2.viewmodel.AuthViewModel::class.java]
+        val viewModel = app.authViewModel
+
+        // Reset state cũ khi mở lại màn hình
+        viewModel.resetRegisterState()
 
         binding.btnBack.setOnClickListener { finish() }
         binding.tvGoLogin.paintFlags = binding.tvGoLogin.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
@@ -48,8 +50,9 @@ class RegisterActivity : AppCompatActivity() {
                 is RegisterState.Success -> {
                     AlertDialog.Builder(this)
                         .setTitle("Đăng ký thành công!")
-                        .setMessage("Tài khoản của bạn đã được tạo.")
+                        .setMessage("Chúng tôi đã gửi email xác nhận đến địa chỉ email của bạn.\n\nVui lòng kiểm tra hộp thư và nhấn vào link xác nhận trước khi đăng nhập.")
                         .setPositiveButton("OK") { _, _ -> finish() }
+                        .setCancelable(false)
                         .show()
                 }
                 is RegisterState.Error -> {

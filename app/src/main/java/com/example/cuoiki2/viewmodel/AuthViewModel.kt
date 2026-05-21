@@ -16,6 +16,9 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     val isLoggedIn get() = currentUser.value != null
     val isAdmin    get() = currentUser.value?.role == "admin"
 
+    fun resetLoginState() { loginState.value = LoginState.Idle }
+    fun resetRegisterState() { registerState.value = RegisterState.Idle }
+
     /** Dùng khi đã có UserAccount (sau khi login thành công từ LoginActivity) */
     fun login(user: UserAccount) { currentUser.value = user }
 
@@ -27,11 +30,13 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
         loginState.value = LoginState.Loading
         viewModelScope.launch {
             val user = userRepo.login(username, password)
-            if (user != null) {
-                currentUser.value = user
-                loginState.value = LoginState.Success(user)
-            } else {
-                loginState.value = LoginState.Error("Tên đăng nhập hoặc mật khẩu không đúng")
+            when {
+                user == null -> loginState.value = LoginState.Error("Tên đăng nhập hoặc mật khẩu không đúng")
+                user.id == -1 -> loginState.value = LoginState.Error("Email chưa được xác nhận.\nVui lòng kiểm tra hộp thư và nhấn link xác nhận.")
+                else -> {
+                    currentUser.value = user
+                    loginState.value = LoginState.Success(user)
+                }
             }
         }
     }
@@ -40,7 +45,6 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
         val error = when {
             username.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() ->
                 "Vui lòng điền đầy đủ thông tin"
-            !email.contains("@") -> "Email không hợp lệ"
             username.length < 3  -> "Tên đăng nhập phải ít nhất 3 ký tự"
             password.length < 6  -> "Mật khẩu phải ít nhất 6 ký tự"
             password != confirm  -> "Mật khẩu nhập lại không khớp"
@@ -56,7 +60,10 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
         }
     }
 
-    fun logout() { currentUser.value = null }
+    fun logout() {
+        userRepo.logout()
+        currentUser.value = null
+    }
 
     fun changePassword(firestoreId: String, oldPw: String, newPw: String, confirm: String,
                        onSuccess: () -> Unit, onError: (String) -> Unit) {
