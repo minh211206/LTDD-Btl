@@ -3,10 +3,7 @@ package com.example.cuoiki2.repository
 import androidx.lifecycle.MutableLiveData
 import com.example.cuoiki2.model.*
 
-/**
- * Legacy singleton — giữ để tương thích với code cũ.
- * Code mới nên dùng ProductRepository, UserRepository, OrderRepository, ReviewRepository.
- */
+
 object AppRepository {
     val products = MutableLiveData<List<Product>>(emptyList())
     val users    = MutableLiveData<List<UserAccount>>(emptyList())

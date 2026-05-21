@@ -12,6 +12,7 @@ data class Product(
     val imageUrl: String = "",
     val stock: Int = 0
 ) {
+    // Lấy giá theo size
     fun priceForSize(size: String): String = when (size) {
         "L"  -> priceL.ifBlank { price }
         else -> price  // M

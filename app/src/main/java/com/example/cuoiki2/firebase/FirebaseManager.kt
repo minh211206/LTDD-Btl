@@ -20,10 +20,10 @@ object FirebaseManager {
         listenReviews()
     }
 
-    // ── Products ──────────────────────────────────────────────────────────────
+    // Products
 
     private fun listenProducts() {
-        db.collection("products").addSnapshotListener { snap, err ->
+        db.collection("products").addSnapshotListener { snap, err -> //data tự cập nhật không cần refresh
             if (err != null) { android.util.Log.e("FM", "products: ${err.message}"); return@addSnapshotListener }
             snap ?: return@addSnapshotListener
             val list = snap.documents.mapNotNull { doc ->
@@ -45,7 +45,7 @@ object FirebaseManager {
         }
     }
 
-    // ── Users ─────────────────────────────────────────────────────────────────
+    // Users
 
     private fun listenUsers() {
         db.collection("users").addSnapshotListener { snap, err ->
@@ -77,7 +77,7 @@ object FirebaseManager {
         } catch (e: Exception) { false }
     }
 
-    // ── Orders ────────────────────────────────────────────────────────────────
+    // Orders
 
     private fun listenOrders() {
         db.collection("orders").addSnapshotListener { snap, err ->
@@ -120,7 +120,7 @@ object FirebaseManager {
             .addOnSuccessListener { onDone() }
     }
 
-    // ── Reviews ───────────────────────────────────────────────────────────────
+    //  Reviews
 
     private fun listenReviews() {
         db.collection("reviews").addSnapshotListener { snap, _ ->
