@@ -5,16 +5,20 @@ import com.example.cuoiki2.repository.AppRepository
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.example.cuoiki2.databinding.ActivityProductDetailBinding
+import kotlinx.coroutines.launch
 
 class ProductDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProductDetailBinding
     private val cartVm get() = (application as ShopApplication).cartViewModel
     private val favVm  get() = (application as ShopApplication).favoriteViewModel
+    private val reviewRepo get() = (application as ShopApplication).reviewRepo
     private var selectedSize = "M"
     private val sizes = listOf("M", "L")
     private lateinit var product: Product
@@ -63,12 +67,7 @@ class ProductDetailActivity : AppCompatActivity() {
             else -> binding.layoutStockWarning.visibility = View.GONE
         }
 
-        // Rating
-        val reviews = AppRepository.getReviews().filter { it.productFirestoreId == product.firestoreId }
-        binding.tvRating.text = if (reviews.isEmpty()) "Chưa có đánh giá"
-        else "★ ${"%.1f".format(reviews.sumOf { it.stars }.toFloat() / reviews.size)} (${reviews.size})"
-
-        // Size selector — phải gọi trước để hiển thị giá đúng
+        // Size selector
         setupSizes()
 
         // Favorite
@@ -95,8 +94,111 @@ class ProductDetailActivity : AppCompatActivity() {
             }, 1500)
         }
 
-        // Reviews
-        loadReviews(reviews)
+        // Observe reviews realtime
+        AppRepository.reviews.observe(this) { allReviews ->
+            val reviews = allReviews.filter { it.productFirestoreId == product.firestoreId }
+            // Cập nhật rating
+            binding.tvRating.text = if (reviews.isEmpty()) "Chưa có đánh giá"
+            else "★ ${"%.1f".format(reviews.sumOf { it.stars }.toFloat() / reviews.size)} (${reviews.size})"
+            // Cập nhật danh sách review
+            loadReviews(reviews)
+        }
+
+        // Nút viết đánh giá
+        binding.btnWriteReview.setOnClickListener {
+            val user = (application as ShopApplication).authViewModel.currentUser.value
+            if (user == null) {
+                Toast.makeText(this, "Vui lòng đăng nhập để đánh giá", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            showReviewDialog(user.username)
+        }
+    }
+
+    private fun showReviewDialog(username: String) {
+        val ctx = this
+        val layout = LinearLayout(ctx).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(48, 24, 48, 8)
+        }
+
+        // Chọn số sao
+        val tvStarLabel = TextView(ctx).apply {
+            text = "Chọn số sao:"
+            textSize = 14f
+            setTextColor(Color.parseColor("#1A1A1A"))
+        }
+        layout.addView(tvStarLabel)
+
+        var selectedStars = 5
+        val starRow = LinearLayout(ctx).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8, 0, 16)
+        }
+
+        // Tạo list sao trước, gán listener sau
+        val starButtons = mutableListOf<TextView>()
+        for (star in 1..5) {
+            val tv = TextView(ctx).apply {
+                text = "★"
+                textSize = 28f
+                setTextColor(if (star <= selectedStars) Color.parseColor("#F59E0B") else Color.LTGRAY)
+                setPadding(4, 0, 4, 0)
+            }
+            starButtons.add(tv)
+            starRow.addView(tv)
+        }
+        // Gán listener sau khi đã có đủ list
+        starButtons.forEachIndexed { index, tv ->
+            tv.setOnClickListener {
+                selectedStars = index + 1
+                starButtons.forEachIndexed { i, btn ->
+                    btn.setTextColor(
+                        if (i < selectedStars) Color.parseColor("#F59E0B") else Color.LTGRAY
+                    )
+                }
+            }
+        }
+        layout.addView(starRow)
+
+        // Nhập bình luận
+        val etComment = EditText(ctx).apply {
+            hint = "Nhập nhận xét của bạn..."
+            textSize = 14f
+            minLines = 3
+            maxLines = 5
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                        android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+        layout.addView(etComment)
+
+        AlertDialog.Builder(ctx)
+            .setTitle("Đánh giá sản phẩm")
+            .setView(layout)
+            .setPositiveButton("Gửi") { _, _ ->
+                val comment = etComment.text.toString().trim()
+                if (comment.isEmpty()) {
+                    Toast.makeText(ctx, "Vui lòng nhập nhận xét", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                val review = Review(
+                    productFirestoreId = product.firestoreId,
+                    username           = username,
+                    stars              = selectedStars,
+                    comment            = comment,
+                    createdAt          = System.currentTimeMillis()
+                )
+                lifecycleScope.launch {
+                    reviewRepo.saveReview(review)
+                    Toast.makeText(ctx, "Đã gửi đánh giá!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
     }
 
     private fun setupSizes() {
@@ -117,7 +219,6 @@ class ProductDetailActivity : AppCompatActivity() {
             binding.sizeContainer.addView(tv)
             if (size == selectedSize) styleSizeSelected(tv) else styleSizeUnselected(tv)
         }
-        // Hiển thị giá theo size mặc định
         updatePrice()
     }
 
@@ -166,7 +267,7 @@ class ProductDetailActivity : AppCompatActivity() {
             binding.reviewsContainer.addView(tv)
             return
         }
-        reviews.reversed().take(5).forEach { review ->
+        reviews.sortedByDescending { it.createdAt }.take(10).forEach { review ->
             val tv = TextView(this).apply {
                 val stars = "★".repeat(review.stars) + "☆".repeat(5 - review.stars)
                 text = "${review.username}  $stars\n${review.comment}"

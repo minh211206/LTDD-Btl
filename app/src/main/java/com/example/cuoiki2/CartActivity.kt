@@ -4,7 +4,6 @@ import com.example.cuoiki2.model.*
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,6 @@ import com.example.cuoiki2.databinding.ActivityCartBinding
 import com.example.cuoiki2.databinding.ItemCartBinding
 import com.example.cuoiki2.util.formatPrice
 import com.example.cuoiki2.util.parsePrice
-import com.example.cuoiki2.viewmodel.OrderState
 
 class CartActivity : AppCompatActivity() {
 
@@ -29,9 +27,6 @@ class CartActivity : AppCompatActivity() {
         val app = application as ShopApplication
         val appCartVm = app.cartViewModel
 
-        // Reset state cũ khi mở lại màn hình
-        appCartVm.resetOrderState()
-
         binding.btnBack.setOnClickListener { finish() }
 
         adapter = CartAdapter(
@@ -39,7 +34,7 @@ class CartActivity : AppCompatActivity() {
             onDecrease  = { appCartVm.decreaseQty(it) },
             onSizeClick = { item ->
                 val sizes = arrayOf("M", "L")
-                androidx.appcompat.app.AlertDialog.Builder(this)
+                AlertDialog.Builder(this)
                     .setTitle("Chọn size")
                     .setSingleChoiceItems(sizes, sizes.indexOf(item.size)) { dialog, which ->
                         appCartVm.changeSize(item, sizes[which])
@@ -59,12 +54,13 @@ class CartActivity : AppCompatActivity() {
             binding.tvTotal.text = formatPrice(items.sumOf { parsePrice(it.selectedPrice) * it.quantity })
         }
 
+        // Nút "Mua hàng" → mở CheckoutActivity
         binding.btnOrder.setOnClickListener {
             val user = app.authViewModel.currentUser.value
             if (user == null) {
                 AlertDialog.Builder(this)
                     .setTitle("Yêu cầu đăng nhập")
-                    .setMessage("Bạn cần đăng nhập để đặt hàng.")
+                    .setMessage("Bạn cần đăng nhập để mua hàng.")
                     .setPositiveButton("Đăng nhập") { _, _ ->
                         startActivity(Intent(this, LoginActivity::class.java))
                     }
@@ -74,35 +70,11 @@ class CartActivity : AppCompatActivity() {
             if (appCartVm.cartItems.value.isNullOrEmpty()) {
                 AlertDialog.Builder(this)
                     .setTitle("Giỏ hàng trống")
-                    .setMessage("Vui lòng thêm sản phẩm vào giỏ hàng trước khi đặt hàng.")
+                    .setMessage("Vui lòng thêm sản phẩm vào giỏ hàng trước khi mua.")
                     .setPositiveButton("OK", null).show()
                 return@setOnClickListener
             }
-            val address = binding.etAddress.text?.toString()?.trim() ?: ""
-            if (address.isEmpty()) {
-                binding.etAddress.error = "Vui lòng nhập địa chỉ nhận hàng"
-                binding.etAddress.requestFocus()
-                return@setOnClickListener
-            }
-            appCartVm.placeOrder(user.username, address)
-        }
-
-        appCartVm.orderState.observe(this) { state ->
-            when (state) {
-                is OrderState.Success -> {
-                    AlertDialog.Builder(this)
-                        .setTitle("Đặt hàng thành công!")
-                        .setMessage("Đơn hàng của bạn đã được ghi nhận.")
-                        .setPositiveButton("Tuyệt vời!") { _, _ -> finish() }
-                        .show()
-                }
-                is OrderState.Error -> {
-                    AlertDialog.Builder(this)
-                        .setMessage(state.message)
-                        .setPositiveButton("OK", null).show()
-                }
-                else -> {}
-            }
+            startActivity(Intent(this, CheckoutActivity::class.java))
         }
     }
 }
@@ -111,7 +83,7 @@ class CartAdapter(
     private val onIncrease:  (CartItem) -> Unit,
     private val onDecrease:  (CartItem) -> Unit,
     private val onSizeClick: (CartItem) -> Unit
-) : androidx.recyclerview.widget.RecyclerView.Adapter<CartAdapter.VH>() {
+) : RecyclerView.Adapter<CartAdapter.VH>() {
 
     private val items = mutableListOf<CartItem>()
 

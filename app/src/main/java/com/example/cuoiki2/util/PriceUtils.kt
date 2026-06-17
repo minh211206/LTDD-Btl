@@ -13,4 +13,4 @@ fun formatPrice(amount: Long): String {
     return result.reverse().toString() + "đ"
 }
 
-val categories = listOf("Tất cả", "Cà phê", "Trà", "Đá xay", "Bánh")
+val categories = listOf("Tất cả", "Cà phê", "Trà", "Sữa chua", "Trà sữa")

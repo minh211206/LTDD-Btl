@@ -70,75 +70,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="20dp"
         android:paddingVertical="14dp"
+        android:gravity="center_vertical"
         android:elevation="12dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_address_field"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="12dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_location"
-                app:tint="@color/tint_gray"
-                android:contentDescription="Địa chỉ" />
-            <EditText
-                android:id="@+id/et_address"
-                android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:hint="Nhập địa chỉ nhận hàng..."
-                android:textSize="14sp"
-                android:background="@null"
-                android:minLines="2"
-                android:gravity="top"
-                android:inputType="textMultiLine" />
+                android:text="Tổng cộng"
+                android:textSize="12sp"
+                android:textColor="#9E9E9E" />
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0đ"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A1A" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tổng cộng"
-                    android:textSize="12sp"
-                    android:textColor="#9E9E9E" />
-                <TextView
-                    android:id="@+id/tv_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0đ"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#1A1A1A" />
-            </LinearLayout>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_order"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:minWidth="160dp"
-                android:text="Đặt hàng"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:cornerRadius="14dp"
-                app:backgroundTint="#4E2C0E" />
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_order"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:minWidth="160dp"
+            android:text="Mua hàng"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:backgroundTint="#4E2C0E" />
+
     </LinearLayout>
 </LinearLayout>

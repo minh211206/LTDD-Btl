@@ -49,6 +49,8 @@ class UserRepository {
                 val doc = snap.documents.firstOrNull() ?: return@withTimeout null
                 val email = doc.getString("email") ?: return@withTimeout null
 
+
+
                 // Đăng nhập qua Firebase Auth
                 val result = auth.signInWithEmailAndPassword(email, password).await()
                 val firebaseUser = result.user ?: return@withTimeout null
@@ -142,6 +144,14 @@ class UserRepository {
 
     suspend fun deleteUser(user: UserAccount) {
         if (user.firestoreId.isEmpty()) return
+
+        // 1. Xóa tất cả đơn hàng của user này (cascade delete)
+        val orders = db.collection("orders")
+            .whereEqualTo("username", user.username)
+            .get().await()
+        orders.documents.forEach { it.reference.delete().await() }
+
+        // 2. Xóa document user trong Firestore
         db.collection("users").document(user.firestoreId).delete().await()
     }
 

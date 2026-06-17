@@ -40,6 +40,8 @@ data class Order(
     val id: Int = 0,
     val username: String = "",
     val items: List<CartItem> = emptyList(),
+    val recipientName: String = "",
+    val phone: String = "",
     val address: String = "",
     val total: Long = 0L,
     var status: String = "Chờ xác nhận",

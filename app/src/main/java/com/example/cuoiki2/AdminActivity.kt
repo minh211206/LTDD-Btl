@@ -139,7 +139,7 @@ class AdminProductsFragment : Fragment() {
         val etStock  = field("Tồn kho", existing?.stock?.toString() ?: "0", android.text.InputType.TYPE_CLASS_NUMBER)
 
         // Spinner cho danh mục thay vì EditText
-        val categoryList = listOf("Cà phê", "Trà", "Đá xay", "Bánh")
+        val categoryList = listOf("Cà phê", "Trà", "Sữa chua", "Trà sữa")
         val tvCategoryLabel = TextView(ctx).apply {
             text = "Danh mục:"
             textSize = 13f
@@ -248,7 +248,14 @@ class AdminOrdersFragment : Fragment() {
             orientation = LinearLayout.VERTICAL; setPadding(48, 16, 48, 8)
         }
         layout.addView(TextView(ctx).apply {
-            text = "Khách: ${order.username}\nĐịa chỉ: ${order.address.ifBlank{"Chưa có"}}\n\n$items\n\nTổng: ${formatPrice(order.total)}"
+            val info = buildString {
+                append("Khách: ${order.username}\n")
+                append("Người nhận: ${order.recipientName.ifBlank { "Chưa có" }}\n")
+                append("SĐT: ${order.phone.ifBlank { "Chưa có" }}\n")
+                append("Địa chỉ: ${order.address.ifBlank { "Chưa có" }}\n\n")
+                append("$items\n\nTổng: ${formatPrice(order.total)}")
+            }
+            text = info
             textSize = 13f; setPadding(0, 0, 0, 16)
         })
         layout.addView(TextView(ctx).apply { text = "Cập nhật trạng thái:"; textSize = 13f; setTypeface(null, android.graphics.Typeface.BOLD) })
@@ -411,7 +418,7 @@ class AdminUsersFragment : Fragment() {
             .setTitle(user.username)
             .setMessage("Email: ${user.email}\nVai trò: ${user.role}")
             .setPositiveButton("Đóng", null)
-            .setNegativeButton("Xóa tài khoản") { _, _ ->
+            .setNegativeButton("Xóa tài khoản") { _, _ ->
                 AlertDialog.Builder(requireContext())
                     .setTitle("Xác nhận xóa")
                     .setMessage("Xóa tài khoản \"${user.username}\"?")

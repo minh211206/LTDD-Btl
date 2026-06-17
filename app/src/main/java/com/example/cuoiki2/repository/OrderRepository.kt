@@ -37,13 +37,15 @@ class OrderRepository(private val productRepo: ProductRepository) {
                         )
                     }
                     Order(
-                        id          = doc.id.hashCode(),
-                        username    = doc.getString("username") ?: "",
-                        items       = items,
-                        address     = doc.getString("address") ?: "",
-                        total       = doc.getLong("total") ?: 0L,
-                        status      = doc.getString("status") ?: "Chờ xác nhận",
-                        firestoreId = doc.id
+                        id            = doc.id.hashCode(),
+                        username      = doc.getString("username") ?: "",
+                        items         = items,
+                        recipientName = doc.getString("recipientName") ?: "",
+                        phone         = doc.getString("phone") ?: "",
+                        address       = doc.getString("address") ?: "",
+                        total         = doc.getLong("total") ?: 0L,
+                        status        = doc.getString("status") ?: "Chờ xác nhận",
+                        firestoreId   = doc.id
                     )
                 } catch (e: Exception) { null }
             }
@@ -53,8 +55,11 @@ class OrderRepository(private val productRepo: ProductRepository) {
 
     suspend fun placeOrder(order: Order) {
         val model = mapOf(
-            "username"  to order.username,
-            "items"     to order.items.map { ci -> mapOf(
+            "username"      to order.username,
+            "recipientName" to order.recipientName,
+            "phone"         to order.phone,
+            "address"       to order.address,
+            "items"         to order.items.map { ci -> mapOf(
                 "productId"     to ci.product.firestoreId,
                 "productName"   to ci.product.name,
                 "price"         to ci.selectedPrice,

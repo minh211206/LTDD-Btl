@@ -157,13 +157,28 @@
                     android:background="#F0F0F0" android:layout_marginVertical="20dp" />
 
                 <!-- Reviews placeholder -->
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đánh giá &amp; Bình luận"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#1A1A1A" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đánh giá &amp; Bình luận"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#1A1A1A" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_write_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Viết đánh giá"
+                        android:textSize="12sp"
+                        app:cornerRadius="20dp"
+                        app:backgroundTint="#4E2C0E" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/reviews_container"

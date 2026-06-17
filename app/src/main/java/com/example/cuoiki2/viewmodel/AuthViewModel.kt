@@ -46,6 +46,8 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
             username.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() ->
                 "Vui lòng điền đầy đủ thông tin"
             username.length < 3  -> "Tên đăng nhập phải ít nhất 3 ký tự"
+            phone.length != 10 || !phone.all { it.isDigit() } ->
+                "Số điện thoại phải đủ 10 chữ số"
             password.length < 6  -> "Mật khẩu phải ít nhất 6 ký tự"
             password != confirm  -> "Mật khẩu nhập lại không khớp"
             else -> null

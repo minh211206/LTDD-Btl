@@ -108,7 +108,13 @@ class UserOrdersActivity : AppCompatActivity() {
             val unitPrice = parsePrice(ci.selectedPrice)
             "• ${ci.product.name} (${ci.size}) ×${ci.quantity} — ${formatPrice(unitPrice * ci.quantity)}"
         }
-        val msg = "Trạng thái: ${order.status}\nĐịa chỉ: ${order.address.ifBlank { "Chưa có" }}\n\n$items\n\nTổng: ${formatPrice(order.total)}"
+        val msg = buildString {
+            append("Trạng thái: ${order.status}\n")
+            append("Người nhận: ${order.recipientName.ifBlank { "Chưa có" }}\n")
+            append("Số điện thoại: ${order.phone.ifBlank { "Chưa có" }}\n")
+            append("Địa chỉ: ${order.address.ifBlank { "Chưa có" }}\n")
+            append("\n$items\n\nTổng: ${formatPrice(order.total)}")
+        }
 
         val builder = AlertDialog.Builder(this)
             .setTitle("Đơn hàng #${order.id}")

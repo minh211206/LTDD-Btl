@@ -70,17 +70,19 @@ class CartViewModel(private val orderRepo: OrderRepository) : ViewModel() {
         orderState.value = OrderState.Idle
     }
 
-    fun placeOrder(username: String, address: String) {
+    fun placeOrder(username: String, recipientName: String, phone: String, address: String) {
         val items = cartItems.value ?: return
         if (items.isEmpty()) return
         orderState.value = OrderState.Loading
         viewModelScope.launch {
             try {
                 val order = Order(
-                    username = username,
-                    items    = items.toList(),
-                    address  = address,
-                    total    = total
+                    username      = username,
+                    items         = items.toList(),
+                    recipientName = recipientName,
+                    phone         = phone,
+                    address       = address,
+                    total         = total
                 )
                 orderRepo.placeOrder(order)
                 clearCart()

@@ -100,13 +100,15 @@ object FirebaseManager {
                         )
                     }
                     Order(
-                        id          = doc.id.hashCode(),
-                        username    = doc.getString("username") ?: "",
-                        items       = items,
-                        address     = doc.getString("address") ?: "",
-                        total       = doc.getLong("total") ?: 0L,
-                        status      = doc.getString("status") ?: "Chờ xác nhận",
-                        firestoreId = doc.id
+                        id            = doc.id.hashCode(),
+                        username      = doc.getString("username") ?: "",
+                        items         = items,
+                        recipientName = doc.getString("recipientName") ?: "",
+                        phone         = doc.getString("phone") ?: "",
+                        address       = doc.getString("address") ?: "",
+                        total         = doc.getLong("total") ?: 0L,
+                        status        = doc.getString("status") ?: "Chờ xác nhận",
+                        firestoreId   = doc.id
                     )
                 } catch (e: Exception) { null }
             }
